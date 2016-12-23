@@ -20,8 +20,8 @@ from __future__ import print_function
 
 import time
 
-from .protobufs import event_pb2
-from .protobufs import summary_pb2
+from .src import event_pb2
+from .src import summary_pb2
 from .event_file_writer import EventFileWriter
 
 
