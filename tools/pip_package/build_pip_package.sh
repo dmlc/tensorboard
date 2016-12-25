@@ -42,7 +42,7 @@ function main() {
   fi
 
   DEST=$1
-  TMPDIR=$(mktemp -d -t tmp.XXXXXXXXXX)
+  TMPDIR='../python/tensorboard/'
 
   GPU_FLAG=""
   while true; do
@@ -71,66 +71,38 @@ function main() {
     echo "Unzip finished."
     # runfiles structure after unzip the python binary
     cp -R \
-      bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles/org_tensorflow/tensorflow \
-      "${TMPDIR}"
-    mkdir "${TMPDIR}/external"
-    # Note: this makes an extra copy of org_tensorflow.
-    cp_external \
       bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles \
-      "${TMPDIR}/external"
-    RUNFILES=bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles/org_tensorflow
+      "${TMPDIR}"
+    RUNFILES=bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles
   elif [ ! -d bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow ]; then
     # Really old (0.2.1-) runfiles, without workspace name.
     echo "Really old (0.2.1-) runfiles, without workspace name"
     cp -R \
-      bazel-bin/tensorflow/tensorboard/tensorboard.runfiles/org_tensorflow/tensorflow \
+      bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
       "${TMPDIR}"
-    mkdir "${TMPDIR}/external"
-    cp_external \
-      bazel-bin/tensorflow/tensorboard/pip_package/tensorboard.runfiles/org_tensorflow/external \
-      "${TMPDIR}/external"
-    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles/org_tensorflow
+    cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
+    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles
   else
     if [ -d bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow/external ]; then
       # Old-style runfiles structure (--legacy_external_runfiles).
-      echo "New-style runfiles structure (--nolegacy_external_runfiles)"
+      echo "Old-style runfiles structure (--nolegacy_external_runfiles)"
       cp -R \
-        bazel-bin/tensorflow/tensorboard/tensorboard.runfiles/org_tensorflow/tensorflow \
+        bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
         "${TMPDIR}"
-      mkdir "${TMPDIR}/external"
-      cp_external \
-        bazel-bin/tensorflow/tensorboard/pip_package/tensorboard.runfiles/org_tensorflow/external \
-        "${TMPDIR}/external"
+      cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
     else
       # New-style runfiles structure (--nolegacy_external_runfiles).
       echo "New-style runfiles structure (--nolegacy_external_runfiles)"
       cp -R \
-        bazel-bin/tensorflow/tensorboard/tensorboard.runfiles/org_tensorflow/tensorflow \
-        "${TMPDIR}"
-      mkdir "${TMPDIR}/external"
-      # Note: this makes an extra copy of org_tensorflow.
-      cp_external \
         bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
-        "${TMPDIR}/external"
+        "${TMPDIR}"
+      cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
     fi
-    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles/org_tensorflow
+    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles
   fi
 
-  # protobuf pip package doesn't ship with header files. Copy the headers
-  # over so user defined ops can be compiled.
-  mkdir -p ${TMPDIR}/google
-  mkdir -p ${TMPDIR}/third_party
-  pushd ${RUNFILES%org_tensorflow}
-  for header in $(find protobuf -name \*.h); do
-    mkdir -p "${TMPDIR}/google/$(dirname ${header})"
-    cp "$header" "${TMPDIR}/google/$(dirname ${header})/"
-  done
-  popd
-  # cp -R $RUNFILES/third_party/eigen3 ${TMPDIR}/third_party
-
-  cp tensorflow/tools/pip_package/MANIFEST.in ${TMPDIR}
-  cp tensorflow/tools/pip_package/README ${TMPDIR}
-  cp tensorflow/tools/pip_package/setup.py ${TMPDIR}
+  cp ../tools/pip_package/MANIFEST.in ../python
+  cp ../tools/pip_package/README ../python
 
   # Before we leave the top-level directory, make sure we know how to
   # call python.
@@ -138,12 +110,9 @@ function main() {
 
   pushd ${TMPDIR}
   rm -f MANIFEST
+  cd ..
   echo $(date) : "=== Building wheel"
   "${PYTHON_BIN_PATH:-python}" setup.py bdist_wheel ${GPU_FLAG} >/dev/null
-  mkdir -p ${DEST}
-  cp dist/* ${DEST}
-  popd
-  rm -rf ${TMPDIR}
   echo $(date) : "=== Output wheel file is in: ${DEST}"
 }
 
