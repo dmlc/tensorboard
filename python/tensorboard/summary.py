@@ -104,7 +104,7 @@ def histogram(name, values, collections=None):
       buffer.
     """
     name = _clean_tag(name)
-    hist = make_histogram(values.asnumpy().astype(float))
+    hist = make_histogram(values.astype(float))
     return Summary(value=[Summary.Value(tag=name, histo=hist)])
 
 

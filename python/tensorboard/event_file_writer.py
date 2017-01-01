@@ -55,11 +55,6 @@ def directory_check(path):
     # If the direcotry does not exist, create it!
     if not os.path.exists(path):
         os.makedirs(path)
-    # Else, empty the directory.
-    else:
-        file_list = os.listdir(path)
-        for files in file_list:
-            os.remove(path + "/" + files)
 
 
 class EventsWriter(object):
@@ -70,7 +65,7 @@ class EventsWriter(object):
         Events files have a name of the form
         '/some/file/path/events.out.tfevents.[timestamp].[hostname]'
         '''
-        self._file_prefix = file_prefix + "out.tfevents." \
+        self._file_prefix = file_prefix + ".out.tfevents." \
                             + str(time.time())[:10] + "." + socket.gethostname()
 
         # Open(Create) the log file with the particular form of name.
