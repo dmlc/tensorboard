@@ -13,7 +13,7 @@ sh ./configure
 bazel build tensorflow/tensorboard:tensorboard
 
 # prepare pip installation package
-cp -r ../tools/ bazel-bin/tensorflow/tools/
+cp -r ../tools/* bazel-bin/tensorflow/tools/
 # get .whl file in python/dist/
 sh bazel-bin/tensorflow/tools/pip_package/build_pip_package.sh ../python/dist/
 
