@@ -33,7 +33,7 @@ def test_log_image_summary():
         path+'train-labels-idx1-ubyte.gz', path+'train-images-idx3-ubyte.gz')
 
     for i in range(10):
-        tensor = train_img[i]
+        tensor = np.reshape(train_img[i], (28, 28, 1))
         im = summary.image('mnist/'+str(i), tensor)  # in this case, images are grouped under `mnist` tag.
         writer.add_summary(im, i+1)
     writer.flush()
