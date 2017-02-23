@@ -8,9 +8,9 @@ git clone https://github.com/tensorflow/tensorflow
 cd tensorflow
 
 # run configuration.
-bash configure < ../tools/pip_wheel/configure.conf
+bash configure < ../tools/travis_wheel/configure.conf
 # hack bazel compile time
-git apply ../tools/pip_wheel/bazel-hacking.patch
+git apply ../tools/travis_wheel/bazel-hacking.patch
 # build tensorboard
 bazel build tensorflow/tensorboard:tensorboard
 
