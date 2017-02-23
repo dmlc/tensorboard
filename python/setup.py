@@ -29,12 +29,13 @@ from setuptools.dist import Distribution
 # This version string is semver compatible, but incompatible with pip.
 # For pip, we will remove all '-' characters from this string, and use the
 # result for pip.
-_VERSION = '0.12.0-rc1'
+_VERSION = '1.0.0'
 
 REQUIRED_PACKAGES = [
     'numpy >= 1.11.0',
     'six >= 1.10.0',
     'protobuf >= 3.1.0',
+    'werkzeug >= 0.11.10',
 ]
 
 project_name = 'tensorboard'
@@ -165,11 +166,11 @@ headers = (list(find_files('*.h', 'tensorflow/core')) +
 setup(
     name=project_name,
     version=_VERSION.replace('-', ''),
-    description='TensorFlow helps the tensors flow',
-    long_description='',
-    url='http://tensorflow.org/',
-    author='Google Inc.',
-    author_email='opensource@google.com',
+    description='Standalone TensorBoard for visualizing in deep learning',
+    long_description='TensorBoard striped from TensorFlow, for general deep learning visualization.',
+    url='https://github.com/dmlc/tensorboard',
+    author='zihaolucky',
+    author_email='zihaolucky@gmail.com',
     # Contained modules and scripts.
     packages=['tensorboard'],
     scripts=SCRIPTS,
@@ -207,5 +208,5 @@ setup(
         'Topic :: Software Development :: Libraries',
         ],
     license='Apache 2.0',
-    keywords='tensorflow tensor machine learning',
+    keywords='tensorboard visualization',
     )
