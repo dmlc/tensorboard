@@ -36,6 +36,7 @@ REQUIRED_PACKAGES = [
     'six >= 1.10.0',
     'protobuf >= 3.1.0',
     'werkzeug >= 0.11.10',
+    'Pillow>=4.0.0',
 ]
 
 project_name = 'tensorboard'
