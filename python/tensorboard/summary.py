@@ -36,7 +36,8 @@ from __future__ import print_function
 import logging
 import re as _re
 import bisect
-import cv2
+import StringIO
+from PIL import Image
 import numpy as np
 
 # pylint: disable=unused-import
@@ -172,13 +173,20 @@ def image(tag, tensor):
         tensor = np.ndarray(tensor, dtype=np.float32)
     shape = tensor.shape
     height, width, channel = shape[0], shape[1], shape[2]
+    if channel == 1:
+        # walk around. PIL's setting on dimension.
+        tensor = np.reshape(tensor, (height, width))
     image = make_image(tensor, height, width, channel)
     return Summary(value=[Summary.Value(tag=tag, image=image)])
 
 
 def make_image(tensor, height, width, channel):
     """Convert an numpy representation image to Image protobuf"""
-    image_string = cv2.imencode('.png', tensor)[1].tostring()
+    image = Image.fromarray(tensor)
+    output = StringIO.StringIO()
+    image.save(output, format='PNG')
+    image_string = output.getvalue()
+    output.close()
     return Summary.Image(height=height,
                          width=width,
                          colorspace=channel,
