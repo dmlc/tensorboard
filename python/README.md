@@ -1,8 +1,8 @@
 # TensorBoard for MXNet: Python Package
 
-This package provides a python interface for **logging** different types of *summaries* for TensorBoard.
+This package provides a python interface for **logging** different types of *summaries* for TensorBoard. It's slightly different from the origin ones.
 
-Currently, we support `scalar_summary` and `histogram`, the others would bring online soon.
+Currently, we support `scalar_summary`, `histogram` and `image`, the others would coming soon.
 
 ### Usage
 
@@ -77,3 +77,4 @@ class Speedometer(object):
             
 ```
 
+For more/simple usages, please check https://github.com/dmlc/tensorboard/tree/master/tests/python
