@@ -30,26 +30,6 @@ from .src import event_pb2
 from .record_writer import RecordWriter
 
 
-def as_bytes(bytes_or_text, encoding='utf-8'):
-    """
-    Converts either bytes or unicode to `bytes`, using utf-8 encoding for text.
-    Args:
-    - bytes_or_text: A `bytes`, `str`, or `unicode` object.
-    - encoding: A string indicating the charset for encoding unicode.
-    Returns:
-    - A `bytes` object.
-    Raises:
-    - TypeError: If `bytes_or_text` is not a binary or unicode string.
-    """
-    if isinstance(bytes_or_text, six.text_type):
-        return bytes_or_text.encode(encoding)
-    elif isinstance(bytes_or_text, bytes):
-        return bytes_or_text
-    else:
-        raise TypeError('Expected binary or unicode string, got %r' %
-                        (bytes_or_text,))
-
-
 def directory_check(path):
     '''Initialize the directory for log files.'''
     # If the direcotry does not exist, create it!
@@ -137,7 +117,7 @@ class EventFileWriter(object):
         self._logdir = logdir
         directory_check(self._logdir)
         self._event_queue = six.moves.queue.Queue(max_queue)
-        self._ev_writer = EventsWriter(as_bytes(os.path.join(self._logdir, "events")))
+        self._ev_writer = EventsWriter(os.path.join(self._logdir, "events"))
         self._closed = False
         self._worker = _EventLoggerThread(self._event_queue, self._ev_writer,
                                           flush_secs)

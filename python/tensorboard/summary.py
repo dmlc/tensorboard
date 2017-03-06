@@ -36,7 +36,7 @@ from __future__ import print_function
 import logging
 import re as _re
 import bisect
-import StringIO
+from six import StringIO
 from PIL import Image
 import numpy as np
 
