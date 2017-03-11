@@ -23,6 +23,7 @@ import time
 from .src import event_pb2
 from .src import summary_pb2
 from .event_file_writer import EventFileWriter
+from .summary import scalar, histogram, image
 
 
 class SummaryToEventTransformer(object):
@@ -197,3 +198,33 @@ class FileWriter(SummaryToEventTransformer):
         Does nothing if the EventFileWriter was not closed.
         """
         self.event_writer.reopen()
+
+
+class SummaryWriter(object):
+    """Writes `Summary` directly to event files.
+    The `SummaryWriter` class provides a high-level api to create an event file in a
+    given directory and add summaries and events to it. The class updates the
+    file contents asynchronously. This allows a training program to call methods
+    to add data to the file directly from the training loop, without slowing down
+    training.
+    """
+    def __init__(self, log_dir):
+        self.file_writer = FileWriter(logdir=log_dir)
+
+    def add_scalar(self, name, scalar_value, global_step=None):
+        self.file_writer.add_summary(scalar(name, scalar_value), global_step)
+
+    def add_histogram(self, name, values):
+        self.file_writer.add_summary(histogram(name, values))
+
+    def add_image(self, tag, img_tensor):
+        self.file_writer.add_summary(image(tag, img_tensor))
+
+    def close(self):
+        self.file_writer.flush()
+        self.file_writer.close()
+
+    def __del__(self):
+        if self.file_writer is not None:
+            self.file_writer.close()
+
