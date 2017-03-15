@@ -97,12 +97,25 @@ Do you wish to build TensorFlow with OpenCL support? [y/N] N
 ```
 
 ## Usage
-For logging, you can use the python package in your MXNet for logging some training/validation information, see [README](python/README.md) in Python package.
+`dmlc/tensorboard` contains two parts in general, currently we have [Python interface](https://github.com/dmlc/tensorboard/tree/master/python) 
+for writing/logging `scalar`, `histogram` and `image` data to `EventFile`, which the front-end load data from this event file for visualization.
 
-For rendering, 
+Technically, we reuse the rendering part of original TensorBoard of TensorFlow, but rewrite the logging part in pure Python without touching the 
+TensorFlow code. We've try to keep the concepts consistent but the logging API might has some slightly difference.
+
+### Logging
+
+See [README](python/README.md) in Python package.
+
+### Rendering 
 
 ```bash
 $ tensorboard --logdir=path/to/logs
 ``` 
+
+
+## Contribute
+
+You might want to see the development note of this project at our DMLC blog: [](http://dmlc.ml/2017/01/07/bring-TensorBoard-to-MXNet.html)
 
 Feel free to contribute your work and don't hesitate to discuss in issue with your ideas.
