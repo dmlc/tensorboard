@@ -116,6 +116,6 @@ $ tensorboard --logdir=path/to/logs
 
 ## Contribute
 
-You might want to see the development note of this project at our DMLC blog: [](http://dmlc.ml/2017/01/07/bring-TensorBoard-to-MXNet.html)
+You might want to see the development note of this project at our DMLC blog: [Bring TensorBoard to MXNet](http://dmlc.ml/2017/01/07/bring-TensorBoard-to-MXNet.html)
 
 Feel free to contribute your work and don't hesitate to discuss in issue with your ideas.
