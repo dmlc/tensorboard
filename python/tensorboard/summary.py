@@ -37,6 +37,7 @@ import logging
 import re as _re
 import bisect
 from six import StringIO
+from six.moves import range
 from PIL import Image
 import numpy as np
 
@@ -131,7 +132,7 @@ def make_histogram(values):
         idx = bisect.bisect_left(limits, v)
         counts[idx] += 1
 
-    limit_counts = [(limits[i], counts[i]) for i in xrange(len(limits))
+    limit_counts = [(limits[i], counts[i]) for i in range(len(limits))
                    if counts[i]]
     bucket_limit = [lc[0] for lc in limit_counts]
     bucket = [lc[1] for lc in limit_counts]
