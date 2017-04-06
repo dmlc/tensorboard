@@ -14,7 +14,15 @@ index cde1e9e..e205d52 100755
      module_space = stub_filename + '.runfiles'
      if os.path.isdir(module_space):
        break
-+    for mod in site.getsitepackages():
++    package_path = site.getsitepackages()
++    # In case this instance is a string
++    if not isinstance(package_path, list):
++      package_path = [package_path]
++    user_path = site.getusersitepackages()
++    if not isinstance(user_path, list):
++      user_path = [user_path]
++    package_path.extend(user_path)
++    for mod in package_path:
 +      module_space = mod + '/tensorboard/tensorboard' + '.runfiles'
 +      if os.path.isdir(module_space):
 +        return module_space
