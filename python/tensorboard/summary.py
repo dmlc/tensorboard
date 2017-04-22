@@ -184,7 +184,7 @@ def image(tag, tensor):
 def make_image(tensor, height, width, channel):
     """Convert an numpy representation image to Image protobuf"""
     image = Image.fromarray(tensor)
-    output = StringIO.StringIO()
+    output = StringIO()
     image.save(output, format='PNG')
     image_string = output.getvalue()
     output.close()
