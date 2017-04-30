@@ -1,16 +1,8 @@
 diff --git a/python/tensorboard/tensorboard b/python/tensorboard/tensorboard
-index cde1e9e..e205d52 100755
+index cde1e9e..d4c9f08 100755
 --- a/python/tensorboard/tensorboard
 +++ b/python/tensorboard/tensorboard
-@@ -7,6 +7,7 @@ import shutil
- import sys
- import subprocess
- import zipfile
-+import site
- 
- # Return True if running on Windows
- def IsWindows():
-@@ -58,6 +59,10 @@ def FindModuleSpace():
+@@ -58,6 +58,18 @@ def FindModuleSpace():
      module_space = stub_filename + '.runfiles'
      if os.path.isdir(module_space):
        break
