@@ -1,0 +1,63 @@
+diff --git a/python/tensorboard/tensorboard b/python/tensorboard/tensorboard
+index cde1e9e..a8f0a59 100755
+--- a/python/tensorboard/tensorboard
++++ b/python/tensorboard/tensorboard
+@@ -7,11 +7,15 @@ import shutil
+ import sys
+ import subprocess
+ import zipfile
++import site
+ 
+ # Return True if running on Windows
+ def IsWindows():
+   return os.name == 'nt'
+ 
++# get Python version
++PY3 = sys.version_info[0] == 3
++
+ PYTHON_BINARY = '/Users/zihao.zzh/anaconda2/envs/tensorboard/bin/python'
+ if IsWindows() and not PYTHON_BINARY.endswith('.exe'):
+   PYTHON_BINARY = PYTHON_BINARY + '.exe'
+@@ -37,7 +41,22 @@ def FindPythonBinary():
+       'Bazel does not support execution of Python interpreters via labels yet')
+   elif PYTHON_BINARY.startswith('/'):
+     # Case 2: Absolute path.
+-    return PYTHON_BINARY
++    if os.path.exists(PYTHON_BINARY):
++      # file exists
++      return PYTHON_BINARY
++    else:
++      # not exist, have to search.
++
++      return SearchPath('python')
++    if os.path.exists(PYTHON_BINARY):
++      # file exists
++      return PYTHON_BINARY
++    else:
++      # not exist, have to search. often occurs in travis-built wheel.
++      if PY3:
++        return SearchPath('python3')
++      else:
++        return SearchPath('python')
+   elif '/' in PYTHON_BINARY:
+     # Case 3: Path is relative to current working directory.
+     return os.path.join(os.getcwd(), PYTHON_BINARY)
+@@ -58,6 +77,18 @@ def FindModuleSpace():
+     module_space = stub_filename + '.runfiles'
+     if os.path.isdir(module_space):
+       break
++    package_path = site.getsitepackages()
++    # In case this instance is a string
++    if not isinstance(package_path, list):
++      package_path = [package_path]
++    user_path = site.getusersitepackages()
++    if not isinstance(user_path, list):
++      user_path = [user_path]
++    package_path.extend(user_path)
++    for mod in package_path:
++      module_space = mod + '/tensorboard/tensorboard' + '.runfiles'
++      if os.path.isdir(module_space):
++        return module_space
+ 
+     runfiles_pattern = "(.*\.runfiles)/.*"
+     if IsWindows():
