@@ -1,9 +1,7 @@
 # Standalone TensorBoard
 
 [![Build Status](https://travis-ci.org/zihaolucky/tensorboard-distro.svg?branch=v1.0.0)](https://travis-ci.org/zihaolucky/tensorboard-distro)
-[![PyPI version](https://badge.fury.io/py/tensorboard.svg)](https://badge.fury.io/py/tensorboard)
-
-Bring [TensorBoard](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tensorboard) to MXNet.
+[![PyPI version](https://badge.fury.io/py/tensorboard.svg)](https://badge.fury.io/py/tensorboard) 
 
 > TensorBoard is a suite of web applications for inspecting and understanding your TensorFlow runs and graphs. TensorBoard currently supports five visualizations: scalars, images, audio, histograms, and the graph.  
 
