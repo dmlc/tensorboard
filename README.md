@@ -1,4 +1,4 @@
-# TensorBoard for MXNet
+# Standalone TensorBoard
 
 [![Build Status](https://travis-ci.org/zihaolucky/tensorboard-distro.svg?branch=v1.0.0)](https://travis-ci.org/zihaolucky/tensorboard-distro)
 [![PyPI version](https://badge.fury.io/py/tensorboard.svg)](https://badge.fury.io/py/tensorboard)
