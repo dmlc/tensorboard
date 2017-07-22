@@ -1,22 +1,8 @@
 # Standalone TensorBoard
 
-[![Build Status](https://travis-ci.org/zihaolucky/tensorboard-distro.svg?branch=v1.0.0)](https://travis-ci.org/zihaolucky/tensorboard-distro)
-[![PyPI version](https://badge.fury.io/py/tensorboard.svg)](https://badge.fury.io/py/tensorboard) 
-
 > TensorBoard is a suite of web applications for inspecting and understanding your TensorFlow runs and graphs. TensorBoard currently supports five visualizations: scalars, images, audio, histograms, and the graph.  
 
 > This README gives an overview of key concepts in TensorBoard, as well as how to interpret the visualizations TensorBoard provides. For an in-depth example of using TensorBoard, see the tutorial: [TensorBoard: Visualizing Learning](https://www.tensorflow.org/versions/master/how_tos/summaries_and_tensorboard/index.html). For in-depth information on the Graph Visualizer, see this tutorial: [TensorBoard: Graph Visualization](https://www.tensorflow.org/versions/master/how_tos/graph_viz/index.html).  
-
-## Installing via PyPI(recommended)
-It's easy to install TensorBoard via PyPI:
-
-```
-pip install tensorboard
-```
-
-Please submit your feedback at https://github.com/dmlc/tensorboard/issues/19 if you have any troubles in using TensorBoard PyPI.
-
-We maintain our PyPI at [tensorboard-distro)](https://github.com/zihaolucky/tensorboard-distro)
 
 ## Installing from source
 When installing from source you will build a pip wheel that you then install using pip. We provide a `installer.sh` and `build_pip_package.sh` for you to get that pip wheel.

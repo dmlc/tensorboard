@@ -111,6 +111,7 @@ function main() {
   pushd ${TMPDIR}
   rm -f MANIFEST
   cd ..
+  pwd
   # apply tensorboard-binary.path
   git apply ../tensorboard-python-binary.patch
   echo $(date) : "=== Building wheel"
