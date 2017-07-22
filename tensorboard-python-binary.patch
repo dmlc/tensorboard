@@ -1,5 +1,5 @@
 diff --git a/python/tensorboard/tensorboard b/python/tensorboard/tensorboard
-index cde1e9e..a8f0a59 100755
+index 6e3f6c6..62daaef 100755
 --- a/python/tensorboard/tensorboard
 +++ b/python/tensorboard/tensorboard
 @@ -7,11 +7,15 @@ import shutil
@@ -15,21 +15,14 @@ index cde1e9e..a8f0a59 100755
 +# get Python version
 +PY3 = sys.version_info[0] == 3
 +
- PYTHON_BINARY = '/Users/zihao.zzh/anaconda2/envs/tensorboard/bin/python'
- if IsWindows() and not PYTHON_BINARY.endswith('.exe'):
-   PYTHON_BINARY = PYTHON_BINARY + '.exe'
-@@ -37,7 +41,22 @@ def FindPythonBinary():
+ def GetWindowsPathWithUNCPrefix(path):
+   """
+   Adding UNC prefix after getting a normalized absolute Windows path,
+@@ -57,7 +61,15 @@ def FindPythonBinary():
        'Bazel does not support execution of Python interpreters via labels yet')
    elif PYTHON_BINARY.startswith('/'):
      # Case 2: Absolute path.
 -    return PYTHON_BINARY
-+    if os.path.exists(PYTHON_BINARY):
-+      # file exists
-+      return PYTHON_BINARY
-+    else:
-+      # not exist, have to search.
-+
-+      return SearchPath('python')
 +    if os.path.exists(PYTHON_BINARY):
 +      # file exists
 +      return PYTHON_BINARY
@@ -42,7 +35,7 @@ index cde1e9e..a8f0a59 100755
    elif '/' in PYTHON_BINARY:
      # Case 3: Path is relative to current working directory.
      return os.path.join(os.getcwd(), PYTHON_BINARY)
-@@ -58,6 +77,18 @@ def FindModuleSpace():
+@@ -78,6 +90,18 @@ def FindModuleSpace():
      module_space = stub_filename + '.runfiles'
      if os.path.isdir(module_space):
        break

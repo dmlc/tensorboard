@@ -6,6 +6,7 @@ make all
 # get tensorflow
 git clone https://github.com/tensorflow/tensorflow
 cd tensorflow
+git checkout -b v1.0.0-rc1 v1.0.0-rc1
 
 # run configuration.
 bash configure
