@@ -1,28 +1,31 @@
 #!/usr/bin/env bash
 
-# make protobufs for logging part first
-make all
+# make protobufs, for front-end logging
+#make all
 
-# get tensorflow
-git clone https://github.com/tensorflow/tensorflow
+# add submodule
+#git submodule add https://github.com/zihaolucky/tensorboard-lite.git tensorboard-lite
+cd tensorboard-lite
+
+# resolve dependency
+#git submodule init
+#git submodule update --recursive
+
+# config tensorflow
 cd tensorflow
-git checkout -b v1.0.0-rc1 v1.0.0-rc1
+#./configure
 
-# run configuration.
-bash configure
-# build tensorboard
-bazel build tensorflow/tensorboard:tensorboard
+# build tensorboard backend
+cd ..
+#bazel build -c opt tensorboard:tensorboard
 
-# prepare pip installation package
-cp -r ../tools/* bazel-bin/tensorflow/tools/
+# move backend runfiles into python/dist
+cp -r ../tools/* bazel-bin/tensorboard/tools/
+cp -r tensorflow/tools/python_bin_path.sh bazel-bin/tensorboard/tools/
 # get .whl file in python/dist/
-bash bazel-bin/tensorflow/tools/pip_package/build_pip_package.sh ../python/dist/
+bash bazel-bin/tensorboard/tools/build_pip_package.sh ../python/dist/
 
-# install tensorboard package from .whl file
+# install
 cd ..
 pip install python/dist/*.whl
-
-# clean up
-echo 'Now you can remove tensorflow with rm -rf tensorflow'
-#rm -rf tensorflow/
 

@@ -58,55 +58,55 @@ function main() {
 
   echo $(date) : "=== Using tmpdir: ${TMPDIR}"
 
-  if [ ! -d bazel-bin/tensorflow ]; then
+  if [ ! -d bazel-bin/tensorboard ]; then
     echo "Could not find bazel-bin.  Did you run from the root of the build tree?"
     exit 1
   fi
 
   if is_windows; then
-    rm -rf ./bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip
-    mkdir -p ./bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip
+    rm -rf ./bazel-bin/tensorboard/tools/pip_package/simple_console_for_window_unzip
+    mkdir -p ./bazel-bin/tensorboard/tools/pip_package/simple_console_for_window_unzip
     echo "Unzipping simple_console_for_windows.zip to create runfiles tree..."
-    unzip -o -q ./bazel-bin/tensorflow/tools/pip_package/simple_console_for_windows.zip -d ./bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip
+    unzip -o -q ./bazel-bin/tensorboard/tools/pip_package/simple_console_for_windows.zip -d ./bazel-bin/tensorboard/tools/pip_package/simple_console_for_window_unzip
     echo "Unzip finished."
     # runfiles structure after unzip the python binary
     cp -R \
-      bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles \
+      bazel-bin/tensorboard/tools/pip_package/simple_console_for_window_unzip/runfiles \
       "${TMPDIR}"
-    RUNFILES=bazel-bin/tensorflow/tools/pip_package/simple_console_for_window_unzip/runfiles
-  elif [ ! -d bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow ]; then
+    RUNFILES=bazel-bin/tensorboard/tools/pip_package/simple_console_for_window_unzip/runfiles
+  elif [ ! -d bazel-bin/tensorboard/tools/pip_package/build_pip_package.runfiles/org_tensorflow ]; then
     # Really old (0.2.1-) runfiles, without workspace name.
     echo "Really old (0.2.1-) runfiles, without workspace name"
     cp -R \
-      bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
+      bazel-bin/tensorboard/tensorboard.runfiles \
       "${TMPDIR}"
-    cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
-    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles
+    cp bazel-bin/tensorboard/tensorboard "${TMPDIR}"
+    RUNFILES=bazel-bin/tensorboard/tensorboard.runfiles
   else
-    if [ -d bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow/external ]; then
+    if [ -d bazel-bin/tensorboard/tools/pip_package/build_pip_package.runfiles/org_tensorflow/external ]; then
       # Old-style runfiles structure (--legacy_external_runfiles).
       echo "Old-style runfiles structure (--nolegacy_external_runfiles)"
       cp -R \
-        bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
+        bazel-bin/tensorboard/tensorboard.runfiles \
         "${TMPDIR}"
-      cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
+      cp bazel-bin/tensorboard/tensorboard "${TMPDIR}"
     else
       # New-style runfiles structure (--nolegacy_external_runfiles).
       echo "New-style runfiles structure (--nolegacy_external_runfiles)"
       cp -R \
-        bazel-bin/tensorflow/tensorboard/tensorboard.runfiles \
+        bazel-bin/tensorboard/tensorboard.runfiles \
         "${TMPDIR}"
-      cp bazel-bin/tensorflow/tensorboard/tensorboard "${TMPDIR}"
+      cp bazel-bin/tensorboard/tensorboard "${TMPDIR}"
     fi
-    RUNFILES=bazel-bin/tensorflow/tensorboard/tensorboard.runfiles
+    RUNFILES=bazel-bin/tensorboard/tensorboard.runfiles
   fi
 
-  cp ../tools/pip_package/MANIFEST.in ../python
-  cp ../tools/pip_package/README ../python
+  cp bazel-bin/tensorboard/tools/MANIFEST.in ../python
+  cp bazel-bin/tensorboard/tools/README ../python
 
   # Before we leave the top-level directory, make sure we know how to
   # call python.
-  source tools/python_bin_path.sh
+  source bazel-bin/tensorboard/tools/python_bin_path.sh
 
   pushd ${TMPDIR}
   rm -f MANIFEST

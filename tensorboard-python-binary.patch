@@ -1,5 +1,5 @@
 diff --git a/python/tensorboard/tensorboard b/python/tensorboard/tensorboard
-index 6e3f6c6..62daaef 100755
+index a47d51c..8a8b8ff 100755
 --- a/python/tensorboard/tensorboard
 +++ b/python/tensorboard/tensorboard
 @@ -7,11 +7,15 @@ import shutil
@@ -27,7 +27,7 @@ index 6e3f6c6..62daaef 100755
 +      # file exists
 +      return PYTHON_BINARY
 +    else:
-+      # not exist, have to search. often occurs in travis-built wheel.
++      # have to search. often occurs in travis-built wheel.
 +      if PY3:
 +        return SearchPath('python3')
 +      else:
@@ -42,7 +42,7 @@ index 6e3f6c6..62daaef 100755
 +    package_path = site.getsitepackages()
 +    # In case this instance is a string
 +    if not isinstance(package_path, list):
-+      package_path = [package_path]
++      package_path= [package_path]
 +    user_path = site.getusersitepackages()
 +    if not isinstance(user_path, list):
 +      user_path = [user_path]
