@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 # make protobufs, for front-end logging
-#make all
+make all
 
 # add submodule
-#git submodule add https://github.com/zihaolucky/tensorboard-lite.git tensorboard-lite
+git submodule add https://github.com/zihaolucky/tensorboard-lite.git tensorboard-lite
 cd tensorboard-lite
 
 # resolve dependency
-#git submodule init
-#git submodule update --recursive
+git submodule init
+git submodule update --recursive
 
 # config tensorflow
 cd tensorflow
-#./configure
+./configure
 
 # build tensorboard backend
 cd ..
-#bazel build -c opt tensorboard:tensorboard
+bazel build -c opt tensorboard:tensorboard
 
 # move backend runfiles into python/dist
 cp -r ../tools/* bazel-bin/tensorboard/tools/
