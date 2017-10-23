@@ -1,0 +1,3 @@
+[submodule "tensorboard-lite"]
+	path = tensorboard-lite
+	url = https://github.com/zihaolucky/tensorboard-lite.git
