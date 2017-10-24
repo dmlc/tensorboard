@@ -3,16 +3,20 @@
 # make protobufs, for front-end logging
 make all
 
-# add submodule
-git submodule add https://github.com/zihaolucky/tensorboard-lite.git tensorboard-lite
-cd tensorboard-lite
+if [ ! -d tensorboard-lite/ ]; then
+  echo "Could not find submodule tensorboard-lite. Please use git clone --recursive instead."
+  exit 1
+fi
 
-# resolve dependency
+# init the backend
+cd tensorboard-lite
 git submodule init
 git submodule update --recursive
 
-# config tensorflow
+# init tensorflow as external dependency of tensorboard's backend.
 cd tensorflow
+git submodule init
+git submodule update --recursive
 ./configure
 
 # build tensorboard backend
