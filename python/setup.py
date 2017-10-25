@@ -29,14 +29,18 @@ from setuptools.dist import Distribution
 # This version string is semver compatible, but incompatible with pip.
 # For pip, we will remove all '-' characters from this string, and use the
 # result for pip.
-_VERSION = '1.0.0'
+_VERSION = '0.4.0a0'
 
 REQUIRED_PACKAGES = [
-    'numpy >= 1.11.0',
-    'six >= 1.10.0',
-    'protobuf >= 3.1.0',
-    'werkzeug >= 0.11.10',
     'Pillow>=4.0.0',
+    'futures >= 3.1.1',
+    'numpy >= 1.12.0',
+    'six >= 1.10.0',
+    'protobuf >= 3.3.0',
+    'werkzeug >= 0.11.10',
+    'html5lib == 0.9999999',  # identical to 1.0b8
+    'markdown >= 2.6.8',
+    'bleach == 1.5.0',
 ]
 
 project_name = 'tensorboard'
@@ -165,7 +169,7 @@ headers = (list(find_files('*.h', 'tensorflow/core')) +
 
 
 setup(
-    name=project_name,
+    name='dmlc-tensorboard',
     version=_VERSION.replace('-', ''),
     description='Standalone TensorBoard for visualizing in deep learning',
     long_description='TensorBoard striped from TensorFlow, for general deep learning visualization.',

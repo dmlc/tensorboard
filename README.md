@@ -22,7 +22,7 @@ Note that this requires [Protocol Buffers 3](https://developers.google.com/proto
 
 #### Install Bazel
 
-Follow instructions [here](http://bazel.build/docs/install.html) to install the dependencies for bazel.
+We use Bazel 0.6.1 [here](https://github.com/bazelbuild/bazel/releases/tag/0.6.1)
 
 #### Install other dependencies
 
@@ -42,7 +42,7 @@ Note that this requires [Protocol Buffers 3](https://developers.google.com/proto
 #### Install Bazel
 
 Follow instructions [here](http://bazel.build/docs/install.html) to install the
-dependencies for bazel. You can then use homebrew to install bazel:
+dependencies for bazel. You can then use homebrew to install bazel(here we use v0.6.1):
 
 ```bash
 $ brew install bazel
