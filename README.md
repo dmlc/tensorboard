@@ -15,10 +15,6 @@ We’re also working on providing a pre-built pip wheel for you, so you can inst
 $ git clone https://github.com/dmlc/tensorboard.git
 ```
 
-### Prepare environment with virtualenv
-
-
-
 ### Prepare environment for Linux
 
 #### Install Protocol Compiler
