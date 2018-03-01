@@ -31,6 +31,8 @@ We use Bazel 0.6.1 [here](https://github.com/bazelbuild/bazel/releases/tag/0.6.1
 $ sudo apt-get install python-numpy python-dev python-wheel python-mock python-protobuf
 # For Python 3.x:
 $ sudo apt-get install python3-numpy python3-dev python3-wheel python3-mock
+# With a virtualenv (export needs to be done for subsequent builds, too):
+$ pip install -r requirements.txt && export PYTHON_BIN_PATH=$VIRTUAL_ENV/bin/python
 ```
 
 ### Prepare environment for Mac OS X
